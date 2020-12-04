@@ -1,4 +1,3 @@
-import re
 import sys
 
 def read_file(path: str) -> str:
