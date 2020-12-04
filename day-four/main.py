@@ -19,7 +19,6 @@ def part_one(blob: str) -> list:
     return valid
 
 def part_two(entries: list) -> list:
-    counter = 0
     entries = [{field.split(':')[0]:field.split(':')[1] for field
                in entry.split()} for entry in entries]
     valid = []
@@ -33,15 +32,17 @@ def part_two(entries: list) -> list:
         if entry['hgt'].endswith('cm'):
             if not 150 <= int(entry['hgt'][:-2]) <= 193:
                 continue
-        if entry['hgt'].endswith('in'):
+        elif entry['hgt'].endswith('in'):
             if not 59 <= int(entry['hgt'][:-2]) <= 76:
                 continue
-        if not re.match(r'#[a-f0-9]{6}', entry['hcl']):
+        else:
+            continue
+        if not re.match(r'^(#[a-f0-9]{6})$', entry['hcl']):
             continue
         hair_colors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
         if not any(substr in entry['ecl'] for substr in hair_colors):
             continue
-        if not re.match(r'\d{9}', entry['pid']):
+        if not re.match(r'^(\d{9})$', entry['pid']):
             continue
         print(entry)
         valid.append(entry)
